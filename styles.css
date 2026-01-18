@@ -32,5 +32,31 @@ Color scheme :
   mask-size: 100% 100%;
   mask-repeat: no-repeat;
   mask-position: center;
+
+  display: grid;
+  grid-gap: 10px;
+  grid-template-rows: 220px 450px 50px;
+  justify-content: center;  
+}
+
+.monitor{  
+  grid-row: 1;
+  width: 400px;
+  height: 200px;
+  background-color: lightgrey;
+  align-self: self-end;
+}
+.buttons{  
+  grid-row: 2;
+  width: 400px;
+  height: 430px;
+  margin-top: 25px;
+  background-color: lightgrey;  
+}
+.footer{
+  grid-row: 3;   
+  width: 350px;
+  height: 40px;    
+  margin-top: 10px;  
 }
 
