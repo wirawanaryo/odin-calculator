@@ -55,11 +55,11 @@ Color scheme :
 
 .monitor{  
   clip-path: path("M 0 0 L 0 200 L 350 200 Q 400 200 400 150 L 400 0 Z");
-  border-radius: 15px 0px 15px 15px;
+  border-radius: 15px 5px 0px 15px;
   grid-row: 1;
   width: 400px;
   height: 200px;
-  background-color: lightgrey;
+  background-color: #272929;
   align-self: self-end;
   display: flex;
   flex-direction: column;
@@ -70,7 +70,7 @@ Color scheme :
 }
 #sMonitor{
   flex: 1;
-  background-color: aquamarine;
+  background-color: rgb(174, 218, 56);
   display: flex;
   justify-content: flex-end;
   align-items: center;  
@@ -99,8 +99,7 @@ Color scheme :
   grid-template-rows: 20% 20% 20% 20% 20%;   
 }
 .longButton, .regButton{
-  font-family: buttonFont;
-  color: #272929;
+  font-family: buttonFont;  
   font-size: 2em;
   margin: 5px;
   border-radius: 20px;
@@ -110,6 +109,10 @@ Color scheme :
 }
 .longButton{
   grid-column: 1/3;  
+}
+.numButton{ 
+  color: white; 
+  background-color: #9a2257;
 }
 
 
