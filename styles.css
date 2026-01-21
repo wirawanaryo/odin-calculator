@@ -110,9 +110,15 @@ Color scheme :
 .longButton{
   grid-column: 1/3;  
 }
-.numButton{ 
+.numButton, #pointButton{ 
   color: white; 
+  border-color: #494786;
   background-color: #9a2257;
+}
+.opButton{
+  color: white;
+  border-color: #9a2257;
+  background-color: #494786;
 }
 
 
