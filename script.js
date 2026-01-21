@@ -12,10 +12,18 @@ const equalButton = document.getElementById("equalButton");
 let allowDot = true; 
 let allowOp = true;
 let allowEq = false;
+let continueCalc = false;
 let calcArray = [];
 
-numButtons.forEach(numButton =>{  
+numButtons.forEach(numButton =>{    
   numButton.addEventListener("click", function() {
+    if (continueCalc === true) {  
+      calcArray.push(bMonitor.textContent);         
+      bMonitor.textContent = ""; 
+      console.log(calcArray); 
+      continueCalc = false; 
+      allowEq = true;   
+    };
     if (bMonitor.textContent.length < 12) {
       bMonitor.append(numButton.textContent);      
     };   
@@ -32,23 +40,35 @@ plusButton.addEventListener("click", function() {
     bMonitor.textContent = "";
     allowOp = false;
     allowEq = true;
-  }  
+  }else if(continueCalc === false){    
+    sMonitor.append(plusButton.textContent)
+    calculate()    
+    allowOp = false;
+    allowEq = false;
+    continueCalc = true;
+  };   
 });
 
+function calculate() {
+  let ans = 0;
+  calcArray.push(bMonitor.textContent);
+  ans = Number(calcArray[0])+Number(calcArray[1])
+  bMonitor.textContent = `${ans}`;
+  console.log(calcArray); 
+  calcArray = []; 
+}
 equalButton.addEventListener("click", function() {    
   if (allowEq === true) {
-    let ans = 0;
-    calcArray.push(bMonitor.textContent);
-    ans = Number(calcArray[0])+Number(calcArray[1])
-    bMonitor.textContent = `${ans}`;
-    console.log(calcArray); 
-    calcArray = [];    
+    calculate();   
     allowEq = false;
     allowOp = true;
   }   
 });
 
-delButton.addEventListener("click", function() {     
+delButton.addEventListener("click", function() { 
+  if(continueCalc === true){
+    return;
+  }    
   if (sMonitor.textContent.at(-1) === '.') {
     allowDot = true;
   }
