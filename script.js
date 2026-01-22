@@ -1,11 +1,10 @@
 const sMonitor = document.getElementById("sMonitor");
 const bMonitor = document.getElementById("bMonitor");
-const testButton = document.getElementById("testbutton");
 const numButtons = document.querySelectorAll(".numButton");
 const pointButton = document.getElementById("pointButton");
 const delButton = document.getElementById("delButton");
 const clearButton = document.getElementById("clearButton");
-// const plusButton = document.getElementById("plusButton");
+const percentButton = document.getElementById("percentButton");
 const equalButton = document.getElementById("equalButton");
 
 const mainOps = document.querySelectorAll(".mainOps");
@@ -14,9 +13,10 @@ const mainOps = document.querySelectorAll(".mainOps");
 let allowDot = true; 
 let allowOp = true;
 let allowEq = false;
+let allowPercent = true;
 let continueCalc = false;
 let curNum = 0;
-let storedNum = 0;
+let storedNum = NaN;
 let curOP ="";
 
 numButtons.forEach(numButton =>{    
@@ -26,6 +26,9 @@ numButtons.forEach(numButton =>{
       continueCalc = false; 
       allowEq = true; 
       allowDot = true;  
+
+      // change
+      allowPercent = true;
     };
     if (bMonitor.textContent.length < 12) {
       bMonitor.append(numButton.textContent);      
@@ -36,25 +39,6 @@ numButtons.forEach(numButton =>{
   });
 });
 
-// plusButton.addEventListener("click", function() {    
-//   if (allowOp === true) {
-//     curOP = plusButton.textContent;
-
-//     sMonitor.append(plusButton.textContent);     
-//     storedNum = Number(bMonitor.textContent);
-//     bMonitor.textContent = "";
-//     allowOp = false;
-//     allowEq = true;    
-//   }else if(continueCalc === false){  
-//     curOP = plusButton.textContent;
-
-//     sMonitor.append(plusButton.textContent)
-//     calculate()    
-//     allowOp = false;
-//     allowEq = false;
-//     continueCalc = true;
-//   };   
-// });
 
 mainOps.forEach(mainOp =>{    
   mainOp.addEventListener("click", function() {
@@ -66,14 +50,21 @@ mainOps.forEach(mainOp =>{
       bMonitor.textContent = "";
       allowOp = false;
       allowEq = true;  
-      allowDot = true;  
-    }else if(continueCalc === false){  
+      allowDot = true; 
+      
+      // change
+      allowPercent = true;
+
+    }else if(continueCalc === false && bMonitor.textContent){  
       sMonitor.append(mainOp.textContent)
       calculate()    
       allowOp = false;
       allowEq = false;      
       continueCalc = true;
       curOP = mainOp.textContent;
+
+      // change
+      allowPercent = true;
     };      
   });
 });
@@ -92,6 +83,9 @@ equalButton.addEventListener("click", function() {
     allowEq = false;
     allowOp = true;
     allowDot = true;
+
+    // change
+    allowPercent = true;
   }   
 });
 
@@ -115,6 +109,10 @@ function clearScreen(opt) {
   }  
   allowDot = true;
   allowOp = true; 
+  
+  // change
+  allowPercent = true;
+
   storedNum = 0;
   curNum = 0;
 };
@@ -130,6 +128,14 @@ pointButton.addEventListener("click", function() {
       sMonitor.append(pointButton.textContent);  
       allowDot = false;    
     };
+});
+
+percentButton.addEventListener("click", function() { 
+  if (allowPercent=== true && bMonitor.textContent ) {
+    let percentage = Number(bMonitor.textContent)/100;
+    bMonitor.textContent = Number(percentage.toFixed(5));
+    allowPercent = false;
+  }      
 });
 
 function operate(operator) {
@@ -149,6 +155,14 @@ function operate(operator) {
       return Number(result.toFixed(3));    
     default:
       return result;
-  }
-  
+  }  
 }
+
+// function storeScreen(string) {
+//   if (string.includes("%")) {
+//     let percentage = string.slice(0,-1)/100
+//     return Number(Number(percentage.toFixed(3)))
+//   } else {
+//     return Number(string);
+//   }
+// }
