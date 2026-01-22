@@ -24,7 +24,8 @@ numButtons.forEach(numButton =>{
     if (continueCalc === true) {                 
       bMonitor.textContent = "";       
       continueCalc = false; 
-      allowEq = true;   
+      allowEq = true; 
+      allowDot = true;  
     };
     if (bMonitor.textContent.length < 12) {
       bMonitor.append(numButton.textContent);      
@@ -64,12 +65,13 @@ mainOps.forEach(mainOp =>{
       storedNum = Number(bMonitor.textContent);
       bMonitor.textContent = "";
       allowOp = false;
-      allowEq = true;    
+      allowEq = true;  
+      allowDot = true;  
     }else if(continueCalc === false){  
       sMonitor.append(mainOp.textContent)
       calculate()    
       allowOp = false;
-      allowEq = false;
+      allowEq = false;      
       continueCalc = true;
       curOP = mainOp.textContent;
     };      
@@ -89,6 +91,7 @@ equalButton.addEventListener("click", function() {
     calculate();   
     allowEq = false;
     allowOp = true;
+    allowDot = true;
   }   
 });
 
@@ -134,16 +137,16 @@ function operate(operator) {
   switch (operator) {
     case "+":
       result =  storedNum+curNum;
-      return result       
+      return Number(result.toFixed(3));        
     case "-":
       result =  storedNum-curNum;
-      return result  
+      return Number(result.toFixed(3));   
     case "×":
-      result = storedNum*curNum;
-      return result  
+      result = storedNum*curNum;      
+      return Number(result.toFixed(3));  
     case "÷":
       result = storedNum/curNum;
-      return result     
+      return Number(result.toFixed(3));    
     default:
       return result;
   }
