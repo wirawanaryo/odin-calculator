@@ -66,13 +66,12 @@ mainOps.forEach(mainOp =>{
       allowOp = false;
       allowEq = true;    
     }else if(continueCalc === false){  
-      curOP = mainOp.textContent;
-
       sMonitor.append(mainOp.textContent)
       calculate()    
       allowOp = false;
       allowEq = false;
       continueCalc = true;
+      curOP = mainOp.textContent;
     };      
   });
 });
