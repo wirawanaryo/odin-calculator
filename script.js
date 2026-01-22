@@ -5,22 +5,24 @@ const numButtons = document.querySelectorAll(".numButton");
 const pointButton = document.getElementById("pointButton");
 const delButton = document.getElementById("delButton");
 const clearButton = document.getElementById("clearButton");
-const plusButton = document.getElementById("plusButton");
+// const plusButton = document.getElementById("plusButton");
 const equalButton = document.getElementById("equalButton");
+
+const mainOps = document.querySelectorAll(".mainOps");
 
 //flags
 let allowDot = true; 
 let allowOp = true;
 let allowEq = false;
 let continueCalc = false;
-let calcArray = [];
+let curNum = 0;
+let storedNum = 0;
+let curOP ="";
 
 numButtons.forEach(numButton =>{    
   numButton.addEventListener("click", function() {
-    if (continueCalc === true) {  
-      calcArray.push(bMonitor.textContent);         
-      bMonitor.textContent = ""; 
-      console.log(calcArray); 
+    if (continueCalc === true) {                 
+      bMonitor.textContent = "";       
       continueCalc = false; 
       allowEq = true;   
     };
@@ -33,29 +35,55 @@ numButtons.forEach(numButton =>{
   });
 });
 
-plusButton.addEventListener("click", function() {    
-  if (allowOp === true) {
-    sMonitor.append(plusButton.textContent); 
-    calcArray.push(bMonitor.textContent);       
-    bMonitor.textContent = "";
-    allowOp = false;
-    allowEq = true;
-  }else if(continueCalc === false){    
-    sMonitor.append(plusButton.textContent)
-    calculate()    
-    allowOp = false;
-    allowEq = false;
-    continueCalc = true;
-  };   
+// plusButton.addEventListener("click", function() {    
+//   if (allowOp === true) {
+//     curOP = plusButton.textContent;
+
+//     sMonitor.append(plusButton.textContent);     
+//     storedNum = Number(bMonitor.textContent);
+//     bMonitor.textContent = "";
+//     allowOp = false;
+//     allowEq = true;    
+//   }else if(continueCalc === false){  
+//     curOP = plusButton.textContent;
+
+//     sMonitor.append(plusButton.textContent)
+//     calculate()    
+//     allowOp = false;
+//     allowEq = false;
+//     continueCalc = true;
+//   };   
+// });
+
+mainOps.forEach(mainOp =>{    
+  mainOp.addEventListener("click", function() {
+    if (allowOp === true) {
+      curOP = mainOp.textContent;
+
+      sMonitor.append(mainOp.textContent);     
+      storedNum = Number(bMonitor.textContent);
+      bMonitor.textContent = "";
+      allowOp = false;
+      allowEq = true;    
+    }else if(continueCalc === false){  
+      curOP = mainOp.textContent;
+
+      sMonitor.append(mainOp.textContent)
+      calculate()    
+      allowOp = false;
+      allowEq = false;
+      continueCalc = true;
+    };      
+  });
 });
 
 function calculate() {
-  let ans = 0;
-  calcArray.push(bMonitor.textContent);
-  ans = Number(calcArray[0])+Number(calcArray[1])
-  bMonitor.textContent = `${ans}`;
-  console.log(calcArray); 
-  calcArray = []; 
+  let ans = 0;  
+  curNum = Number(bMonitor.textContent);
+  ans = operate(curOP);
+  bMonitor.textContent = `${ans}`;    
+  storedNum = ans;
+  curNum = 0;
 }
 equalButton.addEventListener("click", function() {    
   if (allowEq === true) {
@@ -84,8 +112,9 @@ function clearScreen(opt) {
     bMonitor.textContent = "";
   }  
   allowDot = true;
-  allowOp = true;
-  calcArray = [];
+  allowOp = true; 
+  storedNum = 0;
+  curNum = 0;
 };
 clearButton.addEventListener("click", () => {
     clearScreen(1);
@@ -100,3 +129,24 @@ pointButton.addEventListener("click", function() {
       allowDot = false;    
     };
 });
+
+function operate(operator) {
+  let result = 0
+  switch (operator) {
+    case "+":
+      result =  storedNum+curNum;
+      return result       
+    case "-":
+      result =  storedNum-curNum;
+      return result  
+    case "×":
+      result = storedNum*curNum;
+      return result  
+    case "÷":
+      result = storedNum/curNum;
+      return result     
+    default:
+      return result;
+  }
+  
+}
